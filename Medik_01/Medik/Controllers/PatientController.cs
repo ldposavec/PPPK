@@ -20,9 +20,22 @@ namespace Medik.Controllers
         // GET: PatientController
         public async Task<IActionResult> Index(string search = "")
         {
-            var patients = await _context.Patients
-                .Where(p => p.LastName.Contains(search) || p.Oib.Contains(search))
-                .ToListAsync();
+            //var patients = await _context.Patients
+            //    .Where(p => p.LastName.Contains(search) || p.Oib.Contains(search))
+            //    .ToListAsync();
+            var patients = string.IsNullOrEmpty(search)
+        ? await _context.Patients.ToListAsync()
+        : await _context.Patients
+            .Where(p => p.LastName.Contains(search) ||
+                        p.FirstName.Contains(search) ||
+                        p.Oib.Contains(search))
+            .ToListAsync();
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                return PartialView("_PatientListPartial", patients);
+            }
+
             return View(patients);
         }
 

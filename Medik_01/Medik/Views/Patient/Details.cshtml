@@ -43,6 +43,91 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-info">Edit</a> |
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+<h3>Medical Documentation</h3>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayName("Description")</th>
+                <th>@Html.DisplayName("Start Date")</th>
+                <th>@Html.DisplayName("End Date")</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.MedDocumentations?.Any() == true)
+            {
+                foreach (var item in Model.MedDocumentations)
+                {
+                    <tr>
+                        <td>@item.Diagnosis</td>
+                        <td>@item.StartIllness.ToString("d")</td>
+                        <td>@item.EndIllness?.ToString("d") ?? "Ongoing"</td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="MedDocumentation" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-controller="MedDocumentation" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No medical documentation available.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-action="Create" asp-controller="MedDocumentation" asp-route-pacijentId="@Model.Id" class="btn btn-primary">Add New Documentation</a>
+</div>
+
+<h3>Examinations</h3>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayName("Type")</th>
+                <th>@Html.DisplayName("Date")</th>
+                <th>@Html.DisplayName("Image")</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Examinations?.Any() == true)
+            {
+                foreach (var pregled in Model.Examinations)
+                {
+                    <tr>
+                        <td>@pregled.ExamType</td>
+                        <td>@pregled.DateOfExam.ToString("g")</td>
+                        <td>
+                            @if (pregled.PicturePath != null)
+                            {
+                                <a asp-action="DownloadImage" asp-controller="Examination" asp-route-id="@pregled.Id" class="btn btn-secondary btn-sm">View Image</a>
+                            }
+                            else
+                            {
+                                <span>No Image</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="Examination" asp-route-id="@pregled.Id" class="btn btn-warning btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-controller="Examination" asp-route-id="@pregled.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center">No examinations available.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-action="Create" asp-controller="Examination" asp-route-patientId="@Model.Id" class="btn btn-primary">Add New Examination</a>
 </div>

@@ -49,7 +49,7 @@ namespace Medik.Migrations
 
                     b.HasIndex("PatientId1");
 
-                    b.ToTable("Examinations");
+                    b.ToTable("Examinations", (string)null);
                 });
 
             modelBuilder.Entity("Medik.Models.MedDocumentation", b =>
@@ -80,7 +80,7 @@ namespace Medik.Migrations
 
                     b.HasIndex("PatientId1");
 
-                    b.ToTable("MedDocumentations");
+                    b.ToTable("MedDocumentations", (string)null);
                 });
 
             modelBuilder.Entity("Medik.Models.Patient", b =>
@@ -111,7 +111,7 @@ namespace Medik.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("Medik.Models.Prescription", b =>
@@ -148,7 +148,7 @@ namespace Medik.Migrations
 
                     b.HasIndex("PatientId1");
 
-                    b.ToTable("Prescriptions");
+                    b.ToTable("Prescriptions", (string)null);
                 });
 
             modelBuilder.Entity("Medik.Models.Examination", b =>

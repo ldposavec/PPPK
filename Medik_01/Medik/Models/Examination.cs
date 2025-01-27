@@ -6,6 +6,7 @@ namespace Medik.Models
 {
     public class Examination
     {
+        private DateTime dateOfExam;
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -15,13 +16,16 @@ namespace Medik.Models
 
         [Required]
         [Display(Name = "Date of examination")]
-        public DateTime DateOfExam { get; set; }
+        public DateTime DateOfExam 
+        { 
+            get => dateOfExam; 
+            set => dateOfExam = DateTime.SpecifyKind(value, DateTimeKind.Utc); }
 
         [Required]
         [Display(Name = "Type of examination")]
         public ExamEnum ExamType { get; set; }
         public string? PicturePath { get; set; }
 
-        public Patient Patient { get; set; }
+        public Patient? Patient { get; set; }
     }
 }
