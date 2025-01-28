@@ -132,3 +132,45 @@
     </table>
     <a asp-action="Create" asp-controller="Examination" asp-route-patientId="@Model.Id" class="btn btn-primary">Add New Examination</a>
 </div>
+
+<h3 class="mt-3">Prescriptions</h3>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayName("Medication")</th>
+                <th>@Html.DisplayName("Dose")</th>
+                <th>@Html.DisplayName("Frequency")</th>
+                <th>@Html.DisplayName("Duration")</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Prescriptions?.Any() == true)
+            {
+                foreach (var prescription in Model.Prescriptions)
+                {
+                    <tr>
+                        <td>@prescription.Medication</td>
+                        <td>@prescription.Dose</td>
+                        <td>@prescription.Frequency</td>
+                        <td>@prescription.Duration</td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="Prescription" asp-route-id="@prescription.Id" class="btn btn-warning btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-controller="Prescription" asp-route-id="@prescription.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No prescriptions available.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-action="Create" asp-controller="Prescription" asp-route-patientId="@Model.Id" class="btn btn-primary">Add New Prescription</a>
+</div>
+
+<div class="circle"></div>

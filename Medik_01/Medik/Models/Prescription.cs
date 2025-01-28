@@ -10,6 +10,7 @@ namespace Medik.Models
         public long Id { get; set; }
 
         [Required]
+        [Display(Name = "Patient")]
         public long PatientId { get; set; }
 
         [Required]
@@ -24,6 +25,6 @@ namespace Medik.Models
         [Required]
         public string Duration { get; set; }
 
-        public Patient Patient { get; set; }
+        public Patient? Patient { get; set; }
     }
 }

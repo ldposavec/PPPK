@@ -1,4 +1,4 @@
-﻿@model Medik.Models.Examination
+﻿@model Medik.Models.Prescription
 
 @{
     ViewData["Title"] = "Create";
@@ -6,35 +6,39 @@
 
 <h1>Create</h1>
 
-<h4>Examination</h4>
+<h4>Prescription</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                @* <label asp-for="PatientId" class="control-label"></label>
+                <select asp-for="PatientId" class ="form-control" asp-items="ViewBag.PatientId"></select> *@
                 <label asp-for="PatientId" class="control-label"></label>
                 <input asp-for="PatientId" type="hidden" class="form-control" value="@ViewBag.Patient?.Id" readonly />
                 <input type="text" class="form-control" value="@ViewBag.Patient?.FullName" readonly />
                 <span asp-validation-for="PatientId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateOfExam" class="control-label"></label>
-                <input asp-for="DateOfExam" class="form-control" />
-                <span asp-validation-for="DateOfExam" class="text-danger"></span>
+                <label asp-for="Medication" class="control-label"></label>
+                <input asp-for="Medication" class="form-control" />
+                <span asp-validation-for="Medication" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ExamType" class="control-label"></label>
-                @* <select asp-for="ExamType" class="form-control" asp-items="@(new SelectList(ViewBag.ExamType))"> *@
-                <select asp-for="ExamType" class="form-control" asp-items="@(ViewBag.ExamType as List<SelectListItem>)">
-                    <option value="">Select Exam Type</option>
-                </select>
-                <span asp-validation-for="ExamType" class="text-danger"></span>
+                <label asp-for="Dose" class="control-label"></label>
+                <input asp-for="Dose" class="form-control" />
+                <span asp-validation-for="Dose" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PicturePath" class="control-label"></label>
-                <input asp-for="PicturePath" type="file" class="form-control" name="picture" />
-                <span asp-validation-for="PicturePath" class="text-danger"></span>
+                <label asp-for="Frequency" class="control-label"></label>
+                <input asp-for="Frequency" class="form-control" />
+                <span asp-validation-for="Frequency" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary mt-3" />

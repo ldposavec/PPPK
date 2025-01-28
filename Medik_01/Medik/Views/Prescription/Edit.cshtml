@@ -1,4 +1,4 @@
-﻿@model Medik.Models.MedDocumentation
+﻿@model Medik.Models.Prescription
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,18 +6,13 @@
 
 <h1>Edit</h1>
 
-<h4>MedDocumentation</h4>
+<h4>Prescription</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Diagnosis" class="control-label"></label>
-                <input asp-for="Diagnosis" class="form-control" />
-                <span asp-validation-for="Diagnosis" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 @* <label asp-for="PatientId" class="control-label"></label>
                 <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
@@ -28,19 +23,28 @@
                 <span asp-validation-for="PatientId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartIllness" class="control-label"></label>
-                <input asp-for="StartIllness" class="form-control" />
-                <span asp-validation-for="StartIllness" class="text-danger"></span>
+                <label asp-for="Medication" class="control-label"></label>
+                <input asp-for="Medication" class="form-control" />
+                <span asp-validation-for="Medication" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndIllness" class="control-label"></label>
-                <input asp-for="EndIllness" class="form-control" />
-                <span asp-validation-for="EndIllness" class="text-danger"></span>
+                <label asp-for="Dose" class="control-label"></label>
+                <input asp-for="Dose" class="form-control" />
+                <span asp-validation-for="Dose" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Frequency" class="control-label"></label>
+                <input asp-for="Frequency" class="form-control" />
+                <span asp-validation-for="Frequency" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary mt-3" />
                 <a asp-action="Details" asp-controller="Patient" asp-route-id="@ViewBag.Patient?.Id" class="btn btn-secondary mt-3">Back to Patient</a>
-                <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
             </div>
         </form>
     </div>
