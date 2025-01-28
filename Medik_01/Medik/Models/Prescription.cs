@@ -7,10 +7,10 @@ namespace Medik.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
-        public int PatientId { get; set; }
+        public long PatientId { get; set; }
 
         [Required]
         public string Medication { get; set; }

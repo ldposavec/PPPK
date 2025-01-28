@@ -3,6 +3,7 @@ using System;
 using Medik.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Medik.Migrations
 {
     [DbContext(typeof(MedikContext))]
-    partial class MedikContextModelSnapshot : ModelSnapshot
+    [Migration("20250127225611_ChangeIdToLong")]
+    partial class ChangeIdToLong
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +52,7 @@ namespace Medik.Migrations
 
                     b.HasIndex("PatientId1");
 
-                    b.ToTable("Examinations", (string)null);
+                    b.ToTable("Examinations");
                 });
 
             modelBuilder.Entity("Medik.Models.MedDocumentation", b =>
@@ -80,7 +83,7 @@ namespace Medik.Migrations
 
                     b.HasIndex("PatientId1");
 
-                    b.ToTable("MedDocumentations", (string)null);
+                    b.ToTable("MedDocumentations");
                 });
 
             modelBuilder.Entity("Medik.Models.Patient", b =>
@@ -111,7 +114,7 @@ namespace Medik.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Patients", (string)null);
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("Medik.Models.Prescription", b =>
@@ -148,7 +151,7 @@ namespace Medik.Migrations
 
                     b.HasIndex("PatientId1");
 
-                    b.ToTable("Prescriptions", (string)null);
+                    b.ToTable("Prescriptions");
                 });
 
             modelBuilder.Entity("Medik.Models.Examination", b =>

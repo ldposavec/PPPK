@@ -1,18 +1,22 @@
 ﻿@model Medik.Models.Examination
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
 <h4>Examination</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
+                @* <label asp-for="PatientId" class="control-label"></label>
+                <select asp-for="PatientId" class="form-control" asp-items="ViewBag.PatientId"></select>
+                <span asp-validation-for="PatientId" class="text-danger"></span> *@
                 <label asp-for="PatientId" class="control-label"></label>
                 <input asp-for="PatientId" type="hidden" class="form-control" value="@ViewBag.Patient?.Id" readonly />
                 <input type="text" class="form-control" value="@ViewBag.Patient?.FullName" readonly />
@@ -24,6 +28,9 @@
                 <span asp-validation-for="DateOfExam" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @* <label asp-for="ExamType" class="control-label"></label>
+                <select asp-for="ExamType" class="form-control"></select>
+                <span asp-validation-for="ExamType" class="text-danger"></span> *@
                 <label asp-for="ExamType" class="control-label"></label>
                 @* <select asp-for="ExamType" class="form-control" asp-items="@(new SelectList(ViewBag.ExamType))"> *@
                 <select asp-for="ExamType" class="form-control" asp-items="@(ViewBag.ExamType as List<SelectListItem>)">
@@ -32,12 +39,15 @@
                 <span asp-validation-for="ExamType" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @* <label asp-for="PicturePath" class="control-label"></label>
+                <input asp-for="PicturePath" class="form-control" />
+                <span asp-validation-for="PicturePath" class="text-danger"></span> *@
                 <label asp-for="PicturePath" class="control-label"></label>
                 <input asp-for="PicturePath" type="file" class="form-control" name="picture" />
                 <span asp-validation-for="PicturePath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary mt-3" />
+                <input type="submit" value="Save" class="btn btn-primary mt-3" />
                 <a asp-action="Details" asp-controller="Patient" asp-route-id="@ViewBag.Patient?.Id" class="btn btn-secondary mt-3">Back to Patient</a>
             </div>
         </form>

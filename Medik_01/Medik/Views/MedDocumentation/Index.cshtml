@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Medik.Models.MedDocumentation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="row mb-3 justify-content-between">
+    <div class="col-2">
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </div>
+    <div class="col-4">
+        <input type="text" id="searchInput" class="form-control mr-2" placeholder="Search by Diagnosis, or First or Last name of patient" />
+    </div>
+    <div id="medDocumentationList">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Diagnosis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartIllness)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndIllness)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnosis)
+            </td>
+            <td>
+                @item.Patient.FirstName @item.Patient.LastName
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartIllness)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndIllness)
+            </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+
+
+    @section Scripts {
+        <script>
+            const searchInput = document.getElementById("searchInput");
+
+            searchInput.addEventListener("input", function () {
+                const searchQuery = searchInput.value;
+
+                fetch(`/MedDocumentation/Index?search=${encodeURIComponent(searchQuery)}`, {
+                    method: "GET",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(data, "text/html");
+                        const updatedTable = doc.querySelector("table").outerHTML; // Extract updated table
+                        document.querySelector("#medDocumentationList").innerHTML = updatedTable;
+                    })
+                    .catch(error => console.error("Error fetching patient data:", error));
+            });
+        </script>
+
+    }
