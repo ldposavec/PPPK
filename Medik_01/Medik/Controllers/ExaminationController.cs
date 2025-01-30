@@ -30,10 +30,6 @@ namespace Medik.Controllers
         // GET: ExaminationController/Create
         public async Task<IActionResult> Create(long patientId)
         {
-            //ViewBag.ExamType = Enum.GetValues(typeof(ExamEnum)).Cast<ExamEnum>().ToList();
-            ////ViewBag.Patient = await _context.Patients.FirstOrDefaultAsync(p => p.Id == patientId);
-            //ViewBag.Patient = patientId;
-            //return View();
             var patient = await _context.Patients
                 .Select(p => new { p.Id, FullName = $"{p.FirstName} {p.LastName}" })
                 .Where(p => p.Id == patientId)
@@ -50,7 +46,6 @@ namespace Medik.Controllers
                 }).ToList();
 
             ViewBag.Patient = patient;
-            //ViewBag.ExamType = Enum.GetValues(typeof(ExamEnum)).Cast<ExamEnum>().ToList();
             ViewBag.ExamType = examTypes;
             return View();
         }
@@ -64,16 +59,7 @@ namespace Medik.Controllers
             {
                 if (picture != null)
                 {
-                    var guidPictureName = $"{Path.GetFileNameWithoutExtension(picture.FileName)} - {Guid.NewGuid()}{Path.GetExtension(picture.FileName)}";
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-                    if (!Directory.CreateDirectory(path).Exists) Directory.CreateDirectory(path);
-                    path = Path.Combine(path, guidPictureName);
-                    System.IO.File.Create(path).Dispose();
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await picture.CopyToAsync(stream);
-                    }
-                    examination.PicturePath = guidPictureName;
+                    examination.PicturePath = await CreateFile(picture);
                 }
                 _context.Examinations.Add(examination);
                 await _context.SaveChangesAsync();
@@ -126,24 +112,11 @@ namespace Medik.Controllers
             {
                 if (examination.PicturePath != null)
                 {
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", examination.PicturePath);
-                    if (System.IO.File.Exists(path))
-                    {
-                        System.IO.File.Delete(path);
-                    }
+                    DeleteFile(examination.PicturePath);
                 }
                 if (picture != null)
                 {
-                    var guidPictureName = $"{Path.GetFileNameWithoutExtension(picture.FileName)} - {Guid.NewGuid()}{Path.GetExtension(picture.FileName)}";
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-                    if (!Directory.CreateDirectory(path).Exists) Directory.CreateDirectory(path);
-                    path = Path.Combine(path, guidPictureName);
-                    System.IO.File.Create(path).Dispose();
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await picture.CopyToAsync(stream);
-                    }
-                    examination.PicturePath = guidPictureName;
+                    examination.PicturePath = await CreateFile(picture);
                 }
                 try
                 {
@@ -189,11 +162,7 @@ namespace Medik.Controllers
             if (exam == null) return NotFound();
             if (exam.PicturePath != null)
             {
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", exam.PicturePath);
-                if (System.IO.File.Exists(path))
-                {
-                    System.IO.File.Delete(path);
-                }
+                DeleteFile(exam.PicturePath);
             }
             _context.Examinations.Remove(exam);
             await _context.SaveChangesAsync();
@@ -214,6 +183,29 @@ namespace Medik.Controllers
             }
             memory.Position = 0;
             return File(memory, "image/png", Path.GetFileName(path));
+        }
+
+        public async Task<string> CreateFile(IFormFile? picture)
+        {
+            var guidPictureName = $"{Path.GetFileNameWithoutExtension(picture.FileName)} - {Guid.NewGuid()}{Path.GetExtension(picture.FileName)}";
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+            if (!Directory.CreateDirectory(path).Exists) Directory.CreateDirectory(path);
+            path = Path.Combine(path, guidPictureName);
+            System.IO.File.Create(path).Dispose();
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await picture.CopyToAsync(stream);
+            }
+            return guidPictureName;
+        }
+
+        public void DeleteFile(string path)
+        {
+            path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", path);
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
         }
     }
 }

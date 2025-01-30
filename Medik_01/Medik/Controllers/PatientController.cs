@@ -1,8 +1,10 @@
-﻿using Medik.Enums;
+﻿using Humanizer;
+using Medik.Enums;
 using Medik.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace Medik.Controllers
 {
@@ -131,6 +133,25 @@ namespace Medik.Controllers
                 _logger.LogError(ex.Message, "Error deleting patient");
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> ExportToCsv()
+        {
+            var patients = await _context.Patients.ToListAsync();
+
+            var builder = new StringBuilder();
+            builder.AppendLine("Id,FirstName,LastName,OIB,DateOfBirth,Gender");
+
+            foreach (var patient in patients)
+            {
+                builder.AppendLine($"{patient.Id},{patient.FirstName},{patient.LastName},{patient.Oib},{patient.DateOfBirth},{patient.Gender.Humanize()}");
+            }
+
+            var fileName = $"Patients_{DateTime.Now:yyyyMMddHHmmss}.csv";
+            var contentType = "text/csv";
+            var fileBytes = Encoding.UTF8.GetBytes(builder.ToString());
+
+            return File(fileBytes, contentType, fileName);
         }
     }
 }

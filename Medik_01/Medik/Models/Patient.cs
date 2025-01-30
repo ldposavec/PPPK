@@ -36,6 +36,9 @@ namespace Medik.Models
         [Required]
         public GenderEnum Gender { get; set; }
 
+        [RegularExpression(@"^\d{5}$", ErrorMessage = "Number of patient must be 5 digits.")]
+        public string? NumberOfPatient { get; set; }
+
         public ICollection<MedDocumentation> MedDocumentations { get; set; } = new List<MedDocumentation>();
         public ICollection<Examination> Examinations { get; set; } = new List<Examination>();
         public ICollection<Prescription> Prescriptions { get; set; } = new List<Prescription>();

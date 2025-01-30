@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medik", "Medik\Medik.csproj", "{46589E83-06AE-4A0B-8B6D-5DFD6F26F17A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XenaScrapping", "XenaScrapping\XenaScrapping.csproj", "{93410B3C-ED6D-4118-8D6E-3827B3033E12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XenaExtractAndImport", "XenaExtractAndImport\XenaExtractAndImport.csproj", "{FC41C7C1-2E63-4E65-8AF4-389583DCA9E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XenaImportToMongoDb", "XenaImportToMongoDb\XenaImportToMongoDb.csproj", "{E11E7EBF-02B9-4719-83BA-742C178D0ABF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{46589E83-06AE-4A0B-8B6D-5DFD6F26F17A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46589E83-06AE-4A0B-8B6D-5DFD6F26F17A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46589E83-06AE-4A0B-8B6D-5DFD6F26F17A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93410B3C-ED6D-4118-8D6E-3827B3033E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93410B3C-ED6D-4118-8D6E-3827B3033E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93410B3C-ED6D-4118-8D6E-3827B3033E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93410B3C-ED6D-4118-8D6E-3827B3033E12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC41C7C1-2E63-4E65-8AF4-389583DCA9E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC41C7C1-2E63-4E65-8AF4-389583DCA9E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC41C7C1-2E63-4E65-8AF4-389583DCA9E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC41C7C1-2E63-4E65-8AF4-389583DCA9E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E11E7EBF-02B9-4719-83BA-742C178D0ABF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E11E7EBF-02B9-4719-83BA-742C178D0ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E11E7EBF-02B9-4719-83BA-742C178D0ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E11E7EBF-02B9-4719-83BA-742C178D0ABF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
