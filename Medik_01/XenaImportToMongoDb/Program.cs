@@ -14,7 +14,7 @@ public class Program
         var filePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\XenaExtractAndImport\\XENA\\Extracted";
         //TransposeData(filePath);
         //TransformData(filePath);
-        DeleteLines(filePath);
+        //DeleteLines(filePath);
         var geneExpressions = ReadTSVFiles(filePath);
         
         genesCollection.InsertMany(geneExpressions);
@@ -146,6 +146,7 @@ public class Program
         "C6orf150", "CCL5", "CXCL10", "TMEM173", "CXCL9", "CXCL11", "NFKB1",
         "IKBKE", "IRF3", "TREX1", "ATM", "IL6", "IL8"
         };
+    private static int id = 0;
 
     public static List<GeneExpression> ReadTSVFiles(string folderPath)
     {
@@ -154,33 +155,27 @@ public class Program
 
         foreach (var file in files)
         {
-            using (var reader = new StreamReader(file))
+            var lines = File.ReadAllLines(file);
+            var header = lines[0].Split('\t').ToList();
+            //var cancerCohort = header[1];
+            var geneExpressionValues = header.Skip(2).ToList();
+            for (int i = 1; i < lines.Length; i++)
             {
-                while (!reader.EndOfStream)
+                var columns = lines[i].Split('\t').ToList();
+                var patientId = long.Parse(columns[0]);
+                var cancerCohort = columns[1];
+                var geneExpression = new GeneExpression
                 {
-                    var line = reader.ReadLine();
-                    var columns = line.Split('\t');
-                    var patientId = columns[0];
-                    var cancerCohort = columns[1];
-                    var geneExpression = new Dictionary<string, double>();
-
-                    for (int i = 2; i < columns.Length; i++)
-                    {
-                        var gene = GenesOfInterest[i - 2];
-                        if (!double.TryParse(columns[i], out double expressionValue))
-                        {
-                            expressionValue = 0.0;
-                        }
-                        geneExpression[gene] = expressionValue;
-                    }
-
-                    geneExpressionDataList.Add(new GeneExpression
-                    {
-                        PatientId = long.Parse(patientId),
-                        CancerCohort = cancerCohort,
-                        GeneExpressionValues = geneExpression
-                    });
+                    Id = ++id,
+                    PatientId = patientId,
+                    CancerCohort = cancerCohort,
+                    GeneExpressionValues = new Dictionary<string, double>()
+                };
+                for (int j = 0; j < geneExpressionValues.Count; j++)
+                {
+                    geneExpression.GeneExpressionValues.Add(geneExpressionValues[j], double.Parse(columns[j + 2]));
                 }
+                geneExpressionDataList.Add(geneExpression);
             }
         }
 
