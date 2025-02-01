@@ -173,7 +173,7 @@ public class Program
 
         var mongoClient = new MongoClient(CONNECTION_STRING);
         //var db = mongoClient.GetDatabase("MedikDatabase");
-        var db = mongoClient.GetDatabase("MediqDatabase");
+        var db = mongoClient.GetDatabase("MediccDatabase");
         var genesCollection = db.GetCollection<GeneExpression>("genes");
 
         var filePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\XenaExtractAndImport\\XENA\\Extracted";

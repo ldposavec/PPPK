@@ -109,7 +109,7 @@ public class Program
     {
         const string CONNECTION_STRING = "mongodb+srv://ldposavec:Pa$$w0rd@cluster0.xhqtb9b.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
         var mongoClient = new MongoClient(CONNECTION_STRING);
-        var db = mongoClient.GetDatabase("MediqDatabase");
+        var db = mongoClient.GetDatabase("MediccDatabase");
         var genes = db.GetCollection<GeneExpression>("genes");
 
         var geneExpressions = genes.Find(FilterDefinition<GeneExpression>.Empty).ToList();
