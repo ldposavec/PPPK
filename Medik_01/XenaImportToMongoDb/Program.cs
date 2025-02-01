@@ -64,7 +64,8 @@ public class Program
     private static void TransformData(string filePath)
     {
         var files = Directory.GetFiles(filePath, "*.tsv");
-        var cancerCohorts = Directory.GetFiles(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\XenaScrapping\\Downloads\\XENA\\", "*.gz").Select(Path.GetFileNameWithoutExtension).Select(s => s.Split('.')[1]).Select(s => s.Split('.')[0]).ToList();
+        //var cancerCohorts = Directory.GetFiles(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\XenaScrapping\\Downloads\\XENA\\", "*.gz").Select(Path.GetFileNameWithoutExtension).Select(s => s.Split('.')[1]).Select(s => s.Split('.')[0]).ToList();
+        var cancerCohorts = Directory.GetFiles(filePath).Select(Path.GetFileNameWithoutExtension).Select(s => s.Split('_')[0]).ToList();
         for (int i = 0; i < files.Count(); i++)
         {
             var file = files[i];

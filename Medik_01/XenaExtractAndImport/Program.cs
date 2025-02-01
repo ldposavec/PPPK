@@ -40,6 +40,7 @@ if (gzFiles.Length == 0)
 foreach (string gzFile in gzFiles)
 {
     string originalFileName = Path.GetFileNameWithoutExtension(gzFile.Split("%2F")[1]);
+    string cancerCohort = Path.GetFileNameWithoutExtension(gzFile.Split("%2F")[0].Split('.')[1].Split('.')[0]);
 
     ProcessStartInfo psi = new ProcessStartInfo(sevenZipPath);
     psi.Arguments = $"x \"{gzFile}\" -o\"{outputFolder}\" -r";
@@ -50,8 +51,7 @@ foreach (string gzFile in gzFiles)
     string extractedFile = Path.Combine(outputFolder, originalFileName);
     if (File.Exists(extractedFile))
     {
-        //gzFile.ToString() = $"{gzFile.ToString()}_{Guid.NewGuid()}.tsv";
-        string newFile = $"{originalFileName}_{Guid.NewGuid()}.tsv";
+        string newFile = $"{cancerCohort}_{originalFileName}_{Guid.NewGuid()}.tsv";
 
         File.Move(extractedFile, Path.Combine(outputFolder, newFile));
         Console.WriteLine($"Renamed: {extractedFile} -> {newFile}");
@@ -62,24 +62,14 @@ Console.WriteLine("Completed extract!");
 
 
 const string ENDPOINT = "regoch.net:9000";
-const string ACCESS_KEY = "minioAdmin"; // tu bi trebao biti ACCESS_KEY
-const string SECRET_KEY = "supersecretpassword"; // tu bi trebao biti SECRET_KEY
+const string ACCESS_KEY = "minioAdmin";
+const string SECRET_KEY = "supersecretpassword";
 string bucketName = "ldpbucket";
 
 var minioClient = new MinioClient()
                         .WithEndpoint(ENDPOINT)
                         .WithCredentials(ACCESS_KEY, SECRET_KEY)
                         .Build();
-
-// provjeravam postoji li bucket imena bucket-test
-
-
-// operacije s bucketima: napraviti bucket, izbrisati bucket,
-//  izlistati objekte iz bucketa, provjeriti postoji li bucket
-
-//operacije s objektima: prenijeti objekt (put), obrisati objekt, dohvatiti objekt,
-//    provjeriti detalje objekta
-
 
 bool found = false;
 try
@@ -95,30 +85,10 @@ catch (MinioException ex)
 
 Console.WriteLine($"{(found ? "Found" : "Not found")}");
 
-// napravite svoj novi bucket preko MinioClienta
-//try
-//{
-
-//    Task makeTask
-//        = minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket("lukas-deni"));
-//    await makeTask;
-//}
-//catch (MinioException ex)
-//{
-//    Console.WriteLine($"{ex.Message}");
-//}
-
-//Console.WriteLine("bucket created");
-
-
-// upload i download objekta putem object keya
-
-//string filepath = @"D:\PPPK\Exercises07\MinioExample\test.txt";
 string[] files = Directory.GetFiles(outputFolder);
 
 foreach (string file in files)
 {
-    //var changeFile = file.Split("Extracted\\")[1];
     var response = await minioClient.PutObjectAsync(
         new PutObjectArgs()
             .WithBucket(bucketName)
@@ -128,18 +98,6 @@ foreach (string file in files)
     );
     Console.WriteLine($"uploaded: {response.ObjectName}");
 }
-//var response = await minioClient.PutObjectAsync(
-//        new PutObjectArgs()
-//            .WithBucket(bucketName)
-//            .WithFileName(filepath)
-//            .WithContentType("application/text")
-//            .WithObject($"{Guid.NewGuid()}_{filepath}")
-//    );
-
-//Console.WriteLine($"uploaded: {response.ObjectName}");
-
-
-// izlistati sve objekte iz bucketa bucket-novi
 
 var objects = minioClient.ListObjectsEnumAsync(
         new ListObjectsArgs().WithBucket(bucketName)
@@ -147,32 +105,7 @@ var objects = minioClient.ListObjectsEnumAsync(
 
 var firstObj = objects.ToBlockingEnumerable().ToList().ElementAt(0);
 
-await foreach (var obj in objects) // === objects.ToBlockingEnumerable();
+await foreach (var obj in objects)
 {
     Console.WriteLine($"{obj.Key} | {obj.Size}B | {obj.ContentType}");
 }
-
-// download prvog objekta
-//try
-//{
-
-//    var stats = await minioClient.GetObjectAsync(
-//            new GetObjectArgs()
-//                .WithBucket(bucketName)
-//                .WithObject(firstObj.Key)
-//                //.WithFile("./downloaded.txt")
-//                .WithCallbackStream((stream) =>
-//                {
-//                    // stream.CopyTo(File.Create($"./downloaded_{firstObj.Key}"));
-//                    //Console.WriteLine("\nSadrzaj:");
-//                    //stream.CopyTo(Console.OpenStandardOutput());
-//                    using (var fileStream = new FileStream($"./downloaded_new.txt", FileMode.Create, FileAccess.Write))
-//                        stream.CopyTo(fileStream);
-//                })
-//        );
-//}
-//catch (Exception ex)
-//{
-
-//    Console.WriteLine(ex.Message);
-//}
