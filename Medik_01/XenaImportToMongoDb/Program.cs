@@ -172,7 +172,8 @@ public class Program
         const string CONNECTION_STRING = "mongodb+srv://ldposavec:Pa$$w0rd@cluster0.xhqtb9b.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
         var mongoClient = new MongoClient(CONNECTION_STRING);
-        var db = mongoClient.GetDatabase("MedikDatabase");
+        //var db = mongoClient.GetDatabase("MedikDatabase");
+        var db = mongoClient.GetDatabase("MediqDatabase");
         var genesCollection = db.GetCollection<GeneExpression>("genes");
 
         var filePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\XenaExtractAndImport\\XENA\\Extracted";
