@@ -5,7 +5,7 @@ public class Program
 {
     private static void Main(string[] args)
     {
-        const string CONNECTION_STRING = "mongodb+srv://ldposavec:Pa$$w0rd@cluster0.xhqtb9b.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; // replace with their own
+        const string CONNECTION_STRING = "mongodb+srv://ldposavec:Pa$$w0rd@cluster0.xhqtb9b.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
         var mongoClient = new MongoClient(CONNECTION_STRING);
         var db = mongoClient.GetDatabase("MedikDatabase");
@@ -87,27 +87,6 @@ public class Program
             }
             File.WriteAllLines(file, newLines);
         }
-        //foreach (var file in files)
-        //{
-        //    var lines = File.ReadAllLines(file);
-        //    var newLines = new List<string>();
-
-        //    var header = lines[0].Split('\t').ToList();
-        //    header.Insert(0, "patient_id");
-        //    header.Insert(1, "cancer_cohort");
-        //    newLines.Add(string.Join("\t", header));
-
-        //    for (int i = 0; i < lines.Length; i++)
-        //    {
-        //        var columns = lines[i].Split('\t').ToList();
-        //        columns.Insert(0, i.ToString());
-        //        columns.Insert(1, cancerCohorts.Where(c => c.Contains(file.));
-        //        //var geneExpressionValues = columns.Skip(2).ToList();
-        //        //newLines.Add($"{patientId}\t{cancerCohort}\t{string.Join("\t", geneExpressionValues)}");
-        //        newLines.Add(string.Join("\t", columns));
-        //    }
-        //    File.WriteAllLines(file, newLines);
-        //}
     }
 
     private static void TransposeData(string filePath)
@@ -157,7 +136,6 @@ public class Program
         {
             var lines = File.ReadAllLines(file);
             var header = lines[0].Split('\t').ToList();
-            //var cancerCohort = header[1];
             var geneExpressionValues = header.Skip(2).ToList();
             for (int i = 1; i < lines.Length; i++)
             {

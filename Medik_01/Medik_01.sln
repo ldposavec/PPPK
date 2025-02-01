@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XenaExtractAndImport", "Xen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XenaImportToMongoDb", "XenaImportToMongoDb\XenaImportToMongoDb.csproj", "{E11E7EBF-02B9-4719-83BA-742C178D0ABF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XenaMergeData", "XenaMergeData\XenaMergeData.csproj", "{30AFE8ED-7E0B-4481-AAAB-6CD9607DDD8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{E11E7EBF-02B9-4719-83BA-742C178D0ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E11E7EBF-02B9-4719-83BA-742C178D0ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E11E7EBF-02B9-4719-83BA-742C178D0ABF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30AFE8ED-7E0B-4481-AAAB-6CD9607DDD8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30AFE8ED-7E0B-4481-AAAB-6CD9607DDD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30AFE8ED-7E0B-4481-AAAB-6CD9607DDD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30AFE8ED-7E0B-4481-AAAB-6CD9607DDD8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

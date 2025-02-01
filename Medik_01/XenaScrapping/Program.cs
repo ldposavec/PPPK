@@ -9,7 +9,6 @@ namespace WebScraperSelenium
         static async Task Main(string[] args)
         {
             string url = "https://xenabrowser.net/datapages/?hub=https://tcga.xenahubs.net:443";
-            //string downloadDirectory = @"C:\Downloads\XENA";
             string downloadDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "Downloads", "XENA");
 
             Directory.CreateDirectory(downloadDirectory);

@@ -4,8 +4,8 @@ using Minio.Exceptions;
 using System.Diagnostics;
 
 string sevenZipPath = @"C:\Program Files\7-Zip\7z.exe";
-string gzFilePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\XenaScrapping\\Downloads\\XENA\\"; //TCGA-ACC.htseq_fpkm.tsv.gz
-string outputFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\XENA\\Extracted\\"; //Output folder
+string gzFilePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + "\\XenaScrapping\\Downloads\\XENA\\";
+string outputFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\XENA\\Extracted\\";
 
 if (!Directory.Exists(outputFolder))
 {
@@ -39,12 +39,6 @@ if (gzFiles.Length == 0)
 
 foreach (string gzFile in gzFiles)
 {
-    //string fileName = Path.GetFileName(gzFile);
-    //string extractedFolder = Path.Combine(outputFolder, fileName.Replace(".gz", ""));
-    //if (!Directory.Exists(extractedFolder))
-    //{
-    //    Directory.CreateDirectory(extractedFolder);
-    //}
     string originalFileName = Path.GetFileNameWithoutExtension(gzFile.Split("%2F")[1]);
 
     ProcessStartInfo psi = new ProcessStartInfo(sevenZipPath);
